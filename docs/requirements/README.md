@@ -17,9 +17,11 @@ The service owns model inference only. The VPS owns source documents, sampling, 
 ## Non-goals
 
 - Corpus discovery/download, document persistence, data cleaning/repair, policy routing, training a student, annotation UI, or writing to the VPS database.
-- Choosing a model, quantization, serving engine, GPU image, CUDA version, context window or concurrency from the “48 GB” report alone.
+- Treating the “48 GB” report as proof of fit or accepting a model/profile without actual host measurements.
 - Full-scale teacher labeling or spend during setup. Live semantic calibration needs an explicitly approved tiny set.
 
 ## Acceptance and decisions
 
 Requirements are in `features/`. Unresolved items are tracked in [`open-questions.md`](open-questions.md). A missing decision that changes class meaning, thresholds, teacher behavior, security exposure, spend, or provenance is a blocker; do not silently supply a domain answer. Safe, reversible implementation details can be recorded as safe defaults with rationale.
+
+Implementation requirements: [runtime-v1.md](runtime-v1.md). Candidate choices are recorded in ADR 0002 under the latest implementation authorization.

@@ -1,0 +1,13 @@
+.git
+.env
+.env.*
+!.env.example
+__pycache__
+*.pyc
+.venv
+*.gguf
+*.partial
+*.pem
+*.key
+models
+artifacts

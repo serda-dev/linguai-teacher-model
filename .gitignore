@@ -22,3 +22,7 @@ models/
 coverage/
 dist/
 build/
+*.partial
+*.pem
+*.key
+*.metadata.json

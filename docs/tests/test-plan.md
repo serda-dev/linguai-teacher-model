@@ -1,6 +1,9 @@
 # Test plan
 
-The test harness and chosen server framework are future implementation decisions. Do not add test dependencies before architecture selects the runtime.
+The runtime uses Gunicorn WSGI plus JSON Schema. Tests use Python unittest, an in-memory fake backend, local HTTP servers, and a real disposable child process. No GPU/model downloads occur.
+
+Run `python -m unittest discover -s tests -v` after installing `requirements.txt`.
+For the container gate run `docker build --target test -t linguai-teacher:test .`; this target runs CPU tests without CUDA compilation or model downloads. Separately run the full Docker build and approved GPU smoke checks before deployment.
 
 ## Deterministic tests (no GPU, no real documents)
 

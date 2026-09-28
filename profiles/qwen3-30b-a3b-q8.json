@@ -1,0 +1,16 @@
+{
+  "profile_id": "qwen3-30b-a3b-q8-llamacpp-v1",
+  "model_id": "Qwen/Qwen3-30B-A3B-GGUF",
+  "revision": "e4d4bafdfb96a411a163846265362aceb0b9c63a",
+  "filename": "Qwen3-30B-A3B-Q8_0.gguf",
+  "sha256": "4ad960d180b16f56024f5b704697e5dd5b0837167c2e515ef0569abfc599743c",
+  "license": "Apache-2.0",
+  "llama_commit": "7fe450e19305b828c199d602c23a8337aaa1f03b",
+  "context_tokens": 8192,
+  "max_output_tokens": 1024,
+  "safety_tokens": 32,
+  "parallel": 1,
+  "gpu_layers": "all",
+  "thinking": false,
+  "acceptance": "GPU fit, latency and semantic calibration pending"
+}

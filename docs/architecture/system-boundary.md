@@ -30,6 +30,6 @@ Liveness indicates that the serving process responds. Readiness is false until t
 
 The current control-plane HTTP timeout is 20 seconds. Its claim lease is 60 seconds and heartbeat freshness is 30 seconds. Measure total request latency at the VPS, including prompt processing and generation. If timing needs changes, update and test these interacting control-plane limits before relying on the new GPU profile. The service must expose the selected model ID through standard API metadata or an equivalent readiness detail and deployment records must pin the resolved model revision and serving image/version. The application records provenance; do not add provenance to teacher JSON.
 
-## Not chosen yet
+## Selected candidate
 
-This boundary intentionally does not prescribe Python framework, API framework, CUDA image, model, quantization or serving engine. Select them only after actual GPU inspection, contract support checks and model memory/latency tests. Record versions and rationale in a dated ADR before implementation.
+See [ADR 0002](decisions/0002-qwen-llamacpp.md) for the source-built Qwen3 profile, exact-token adapter, lifecycle and security design. Actual GPU/latency/network acceptance remains open.

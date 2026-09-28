@@ -1,17 +1,22 @@
-# Open decisions
+# Runtime decisions and remaining measurements
 
-| ID | Decision | Why it matters | Owner / evidence required | Status |
-| --- | --- | --- | --- | --- |
-| Q-01 | Exact teacher model ID and immutable revision | Quality, licensing, memory, speed and output behavior | User; confirm intended model and license | OPEN |
-| Q-02 | GPU vendor/model/count, driver, runtime/CUDA and available disk/network | Determines compatible runtime and model fit | Actual Vast.ai instance inspection | OPEN |
-| Q-03 | Serving engine and pinned version | OpenAI endpoint, structured output, batching and GPU support | Architect after model/host data | OPEN |
-| Q-04 | Quantization/precision and model-loading profile | Can change quality and VRAM use | Actual loading/inference measurements | OPEN |
-| Q-05 | Context and input/output-token caps | Must preserve full teacher prompt + bounded sketch; satisfy caller deadline | Existing VPS cap and GPU measurement | OPEN |
-| Q-06 | Safe concurrency, queueing and overload status | Memory use and worker retry behavior | Representative load test; single caller baseline | OPEN |
-| Q-07 | Inference p95 relative to current 20 s HTTP timeout | A timeout consumes an attempt and may conflict with 60 s lease / 30 s heartbeat | Actual end-to-end test; caller change separately if needed | OPEN |
-| Q-08 | Private network/tunnel, HTTPS address, credential provisioning/rotation | Protect document text and prevent public unauthenticated inference | User/network owner | OPEN |
-| Q-09 | Approved tiny calibration examples, rights and review labels | Required to judge semantic rubric alignment | User supplies/approves exact set | OPEN |
-| Q-10 | Health/readiness path and externally reachable service port | Coolify/proxy and VPS smoke checks | Decide in architecture once framework/engine chosen | OPEN |
-| Q-11 | Model-cache persistence and replacement/re-download cost | GPU instance can be destroyed | Host storage limits and rental economics | OPEN |
+Updated 2026-09-28 under the user's implementation authorization.
 
-Never infer Q-01 from `Qwen/Qwen3.5-35B-A3B-FP8`; that name appeared only as an illustrative example. Never infer any of these decisions from a Jupyter URL alone.
+| ID | Decision | State |
+| --- | --- | --- |
+| Q-01 | Official original Qwen3-30B-A3B GGUF; pinned revision and SHA256 in profile; Apache-2.0 | SELECTED |
+| Q-02 | Actual GPU model, driver, architecture, free VRAM/RAM/disk | OPEN: inspect rented host |
+| Q-03 | Source-built llama.cpp v0.5.0, immutable commit; see ADR 0002 | SELECTED |
+| Q-04 | Q8_0, full GPU layers, no automatic fallback | PROVISIONAL: measure fit/quality |
+| Q-05 | 8192 context, 1024 output, 32 safety tokens, exact token counting | SAFE_DEFAULT: reject overflow; measure |
+| Q-06 | One active generation; no queue/retry; excess 429 | SAFE_DEFAULT: load measurement pending |
+| Q-07 | 18 s service vs 20 s caller, 60 s lease, 30 s heartbeat | OPEN: actual p95; coordinated VPS change if needed |
+| Q-08 | Direct TLS or verified SSH route; random Bearer key | OPEN: actual address, credentials and certificate/tunnel |
+| Q-09 | Tiny human-reviewed A–H semantic calibration | OPEN: approved samples and model measurements |
+| Q-10 | /health liveness, authenticated /ready, container port 8000 | SELECTED: Vast public mapping pending |
+| Q-11 | Verified model-only cache at /workspace/models | SELECTED: host volume persistence to confirm |
+| Q-12 | CUDA Docker build and published immutable image digest | OPEN: Docker/GPU unavailable in authoring environment |
+
+The Qwen3.5 example in the original envelope is not the chosen model. The latest
+user explicitly requested Qwen30A3B and a non-vLLM implementation. No class,
+quality threshold, prompt text or routing behavior was invented or changed.

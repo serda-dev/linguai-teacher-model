@@ -1,0 +1,21 @@
+services:
+  teacher:
+    build:
+      context: .
+      args:
+        VCS_REF: ${VCS_REF:-local}
+    image: ${TEACHER_IMAGE:-linguai-teacher:local}
+    gpus: all
+    init: true
+    restart: unless-stopped
+    stop_grace_period: 30s
+    environment:
+      TEACHER_API_KEY: ${TEACHER_API_KEY:?Set a random API key of at least 32 characters}
+      TEACHER_BIND_HOST: 0.0.0.0
+      TEACHER_MODEL_DIR: /workspace/models
+    ports:
+      - "127.0.0.1:${TEACHER_HOST_PORT:-8000}:8000"
+    volumes:
+      - model-cache:/workspace/models
+volumes:
+  model-cache:
