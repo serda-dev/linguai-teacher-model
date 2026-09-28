@@ -20,8 +20,10 @@ WORKDIR /build/llama
 RUN git init && git remote add origin https://github.com/ggml-org/llama.cpp.git \
     && git fetch --depth 1 origin "$LLAMA_COMMIT" && git checkout --detach FETCH_HEAD \
     && test "$(git rev-parse HEAD)" = "$LLAMA_COMMIT"
+RUN ln -s libcuda.so /usr/local/cuda/lib64/stubs/libcuda.so.1
 RUN cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DGGML_CUDA=ON \
     -DGGML_NATIVE=OFF -DCMAKE_CUDA_ARCHITECTURES="$CUDA_ARCHITECTURES" \
+    -DCMAKE_EXE_LINKER_FLAGS="-L/usr/local/cuda/lib64/stubs -Wl,-rpath-link,/usr/local/cuda/lib64/stubs" \
     -DLLAMA_BUILD_TESTS=OFF -DLLAMA_BUILD_EXAMPLES=OFF -DLLAMA_BUILD_APP=OFF \
     -DLLAMA_BUILD_UI=OFF -DLLAMA_USE_PREBUILT_UI=OFF \
     && cmake --build build --target llama-server -j "$BUILD_JOBS" \
