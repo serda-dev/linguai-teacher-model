@@ -32,6 +32,25 @@ Append a dated entry for material changes. Record the requirement and architectu
   The image reference must be updated to the digest/tag actually published and
   verified before the user chooses an offer.
 
+### 2026-10-02 — Teacher image published
+
+- Full source-built CUDA image completed on this VPS with llama.cpp commit
+  `7fe450e19305b828c199d602c23a8337aaa1f03b`, CUDA 12.8.1 and SM
+  80/86/89/90 build targets. Published `ghcr.io/serda-dev/linguai-teacher-model:e347027`
+  from repository commit `e34702721623778dfd5e13abe2eed187051c5148`.
+- GHCR reported manifest-list digest
+  `sha256:02f84fbe4d5f23ad8d4fd390140a59431e006fe282fa82d581040aabba1e291e`.
+  A local container check found the pinned profile, schema and `llama-server`
+  binary; it did not load the model or use a GPU.
+- Updated Vast template ID `748997` to the release tag and read back its SSH
+  mode, loopback-only environment, onstart launcher, 80 GB disk and private
+  template visibility. The update CLI replaces unspecified settings, so the
+  create/update script now sends all settings in either mode.
+- Anonymous GHCR manifest access was denied while the package was private.
+  The user selected public package visibility; GitHub requires a package
+  settings action before anonymous pulls can be verified. No GPU instance was
+  rented and no teacher labels were generated.
+
 ### 2026-09-28 — Repository preparation
 
 - Added agent workflow, project-specific skill roles, authoritative contracts and acceptance features.

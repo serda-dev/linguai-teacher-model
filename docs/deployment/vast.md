@@ -50,6 +50,14 @@ export TEACHER_IMAGE_REF=ghcr.io/serda-dev/linguai-teacher-model:COMMIT_SHA
 bash scripts/create_vast_template.sh
 ```
 
+To update an existing Vast template, also set `TEACHER_TEMPLATE_HASH_ID` to its
+current hash ID. Vast replaces omitted fields on update; the script sends the
+complete definition. Template ID `748997` was created for this service. The
+release built from commit `e34702721623778dfd5e13abe2eed187051c5148` is
+`ghcr.io/serda-dev/linguai-teacher-model:e347027`, with published manifest-list
+digest `sha256:02f84fbe4d5f23ad8d4fd390140a59431e006fe282fa82d581040aabba1e291e`.
+The current Vast template points to that tag; verify its digest at deployment.
+
 The template reserves 80 GB disk and starts this repository's launcher through
 Vast's SSH-mode onstart script. It binds port 8000 to container loopback and
 publishes no API port. Supply `TEACHER_API_KEY` privately when launching the
