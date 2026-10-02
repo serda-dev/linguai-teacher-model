@@ -119,6 +119,27 @@ and heartbeat freshness 30 seconds. If this fails, do not hide it by raising onl
 the GPU timeout: change/test the VPS caller and lease/heartbeat design together
 in that repository before accepting long-running jobs.
 
+## VPS SSH forwarding sidecar
+
+For the SSH template, first pin the Vast host key in a file readable by the
+unprivileged Docker user and keep the dedicated private key mode 600. From this
+repository on the VPS, start the forwarding sidecar with:
+
+```bash
+VAST_SSH_HOST=<instance-host> VAST_SSH_PORT=<instance-ssh-port> \
+VPS_DOCKER_NETWORK=<coolify-application-network> bash scripts/start_vps_tunnel.sh
+```
+
+The sidecar restarts with Docker, exposes no VPS host port and forwards
+`teacher-tunnel:18000` inside the Coolify network to the Teacher's loopback
+port 8000. Set the Coolify application's `TEACHER_BASE_URL` to
+`http://teacher-tunnel:18000/v1`, with the matching API key, exact model ID and
+profile. Verify authenticated GPU `/ready` through the sidecar and the VPS
+application `/ready` before creating a bounded dataset run. Recreate the sidecar
+when Vast changes the direct SSH host or port. Keep the instance's model cache
+on `/workspace/models` and restore the onstart launcher if the instance is
+recreated from an SSH template without `TEACHER_API_KEY` in its environment.
+
 ## Failure handling
 
 | Signal | Meaning / next step |

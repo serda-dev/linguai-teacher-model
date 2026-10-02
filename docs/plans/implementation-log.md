@@ -4,6 +4,25 @@ Append a dated entry for material changes. Record the requirement and architectu
 
 ## Entries
 
+### 2026-10-02 — Vast instance 53864048 connected to Coolify
+
+- Confirmed the rented RTX A6000 instance pulls the public release image. The
+  official Qwen Q8 GGUF passed its pinned SHA-256 check and loaded on GPU at
+  about 31 GiB VRAM. Authenticated `/ready` reported the expected model,
+  revision, profile and llama.cpp commit.
+- Vast did not inject the updated instance environment into its already-running
+  SSH container. Stored the API key only in a mode-600 file under `/workspace`
+  and added a mode-700 onstart launcher there; `/root/onstart.sh` now relaunches
+  it after an instance restart. No key was recorded in this repository.
+- Started a restartable SSH forwarding sidecar on the Coolify network, forwarding
+  only to the GPU container's loopback port. The public mapped port refused a
+  direct connection. Coolify's `linguai-dataset-quality` API, worker and Postgres
+  started after repairing a stale Postgres role password and URL configuration.
+- VPS `/ready` and GPU `/ready` passed. A single synthetic, non-persisted request
+  from the VPS API container returned a schema-valid label with the expected ID
+  in 1.47 seconds. No source dataset was enrolled; run, document, job and label
+  counts remained zero. Semantic calibration and real-data latency remain open.
+
 ### 2026-10-02 — Vast SSH template preparation
 
 - Added a private Vast SSH template creation script and documented its tunnel-only
