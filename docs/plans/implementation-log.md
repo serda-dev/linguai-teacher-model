@@ -50,6 +50,11 @@ Append a dated entry for material changes. Record the requirement and architectu
   The user selected public package visibility; GitHub requires a package
   settings action before anonymous pulls can be verified. No GPU instance was
   rented and no teacher labels were generated.
+- After the user made the GHCR package public, an empty-credential Docker
+  configuration fetched its manifest and pulled the image successfully.
+  The pull reported the same manifest-list digest as the publish step. Vast
+  template ID `748997` was read back again with the published tag, SSH mode,
+  loopback binding, onstart command and 80 GB disk intact.
 
 ### 2026-09-28 — Repository preparation
 
