@@ -4,6 +4,21 @@ Append a dated entry for material changes. Record the requirement and architectu
 
 ## Entries
 
+### 2026-10-02 — bounded source campaign smoke
+
+- The VPS source plan reserves 40,000 bounded jobs across FineWeb-2 Turkish,
+  four equally weighted BellaTurca subsets, Cosmos and Mogan. A separate
+  restartable VPS container began pinned, finite-window streaming; the GPU
+  still receives only individual text and document ID.
+- Seven additional one-document probes, one per accessible source subset,
+  completed through the real VPS worker and Teacher. All seven were accepted
+  with one model/profile/prompt version and no retry. This is a transport and
+  schema check, not human semantic calibration.
+- Added a mode-700 watchdog in the rented instance's persistent workspace and
+  wired its onstart file to relaunch the Teacher after an unexpected process
+  exit. The model and API key remain on the GPU instance; Hugging Face and
+  database credentials remain only on the VPS.
+
 ### 2026-10-02 — Vast instance 53864048 connected to Coolify
 
 - Confirmed the rented RTX A6000 instance pulls the public release image. The
