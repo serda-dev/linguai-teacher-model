@@ -42,6 +42,21 @@ then kills after ten seconds. Pending jobs remain owned by the VPS.
 
 ## SSH / Jupyter mode
 
+For the private SSH template, publish the tested image first and set its exact
+image reference when creating the template:
+
+```bash
+export TEACHER_IMAGE_REF=ghcr.io/serda-dev/linguai-teacher-model:COMMIT_SHA
+bash scripts/create_vast_template.sh
+```
+
+The template reserves 80 GB disk and starts this repository's launcher through
+Vast's SSH-mode onstart script. It binds port 8000 to container loopback and
+publishes no API port. Supply `TEACHER_API_KEY` privately when launching the
+instance, and configure registry pull credentials if the image is private.
+Creating the template neither rents a GPU nor proves the image can be pulled.
+Confirm the image digest and GPU compatibility before choosing an offer.
+
 Vast may replace the Docker entrypoint for SSH/Jupyter modes. Do not assume seeing
 a notebook means inference is running. This image does not install Jupyter or
 an SSH daemon itself; verify Vast's selected mode provides the operator SSH

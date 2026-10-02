@@ -4,6 +4,34 @@ Append a dated entry for material changes. Record the requirement and architectu
 
 ## Entries
 
+### 2026-10-02 — Vast SSH template preparation
+
+- Added a private Vast SSH template creation script and documented its tunnel-only
+  API topology. The image entrypoint is replaced in SSH mode, so onstart invokes
+  `teacher_service.launch`; port 8000 binds to container loopback.
+- `docker build --target test -t linguai-teacher:test .` passed all 22 CPU/HTTP tests.
+  `bash -n scripts/create_vast_template.sh` and `git diff --check` passed.
+- The full CUDA build was started, then canceled on the production VPS while
+  CUDA compilation was still in progress. No full image or registry artifact was
+  produced, and no GPU model load or inference was run.
+- Vast CLI is installed, but account actions report that a 2FA session is
+  required. The image is not available locally or confirmed pullable from GHCR.
+  No template or paid instance was created. Publish and verify the image, then
+  create and inspect the template before renting a machine.
+
+### 2026-10-02 — Vast account template registered
+
+- After the Vast API key was updated, created private SSH template ID `748997`
+  (`8e1fb5fa3eb15433f66ab50492e1eec6`) and independently read it back.
+  It points to the Teacher image tag for the then-current source revision,
+  recommends 80 GB disk, sets loopback binding, and runs the launcher in onstart.
+- Added a dedicated SSH public key to the Vast account for the eventual VPS
+  tunnel. The private key stays on this VPS; no key material was put in Git or
+  in the template.
+- The template registration does not rent an instance or verify the image pull.
+  The image reference must be updated to the digest/tag actually published and
+  verified before the user chooses an offer.
+
 ### 2026-09-28 — Repository preparation
 
 - Added agent workflow, project-specific skill roles, authoritative contracts and acceptance features.
